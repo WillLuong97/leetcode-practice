@@ -11,6 +11,24 @@ package com.javaprojects.DynamicProgrammingProblems;
  Input: n = 2
  Output: 1
  Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.
+
+n = 2
+ f(2) = f(2-1) + f(2-2) = f(1) + f(0) = 1 + 0 = 1
+n=3
+ f(3) = f(3-1) + f(3-2) = f(2) + f(1) = 1 + 1 = 2
+n=4
+ f(4) = f(4-1) + f(4-2) = f(3) + f(2) = (f(3-1) + f(3-2)) + (f(2-1) + f(2-2)) = f(2) + f(1) + f(1) + f(0) = 3
+
+ Recursive approach
+ time complexity: O(2^n)
+ space complexity: O(n), n is the size of the recursion stack
+
+ Bottom up approach: where we cache the sub solution of each fibonacci sequence for later calculation
+ f(4-1) + f(4-2) = f(3) + f(2) = 2 + 1 = 3
+
+ time complexity: O(n), we just go through the array to find the solutions and plug it into the current calculation
+ space complexity: O(n), n is the size of cached sub solutions, stored these in an array
+
  Example 2:
 
  Input: n = 3
@@ -27,7 +45,25 @@ package com.javaprojects.DynamicProgrammingProblems;
 
  **/
 public class FibonacciNumber {
+    //recursive appraoch
     public int fib(int n) {
-        throw new RuntimeException("NOT YET IMPLEMENTED!");
+        if(n <= 1){
+            return n;
+        }
+        return fib(n-1) + fib(n-2);
+    }
+
+    //bottom up approach
+    public int fib_BOTTOM_UP(int n){
+        //create an array to store all the calculated fibonacci sequence
+        int[] dp = new int[n+2]; //handle edge cases where n = 0
+        //base cases:
+        dp[0] = 0;
+        dp[1] = 1;
+        for(int i = 2; i <= n; i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+
+        return dp[n];
     }
 }
